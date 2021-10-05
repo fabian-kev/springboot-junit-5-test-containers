@@ -27,6 +27,9 @@ class TestContainerApplicationTests {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private GetUsers getUsers;
+
     @DynamicPropertySource
     static void properties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", () -> MY_SQL_CONTAINER.getJdbcUrl());
@@ -52,6 +55,11 @@ class TestContainerApplicationTests {
         UserEntity userEntity = userRepository.findById(1l).get();
         assertEquals(userEntity.getName(), "Kevin Fabian");
 
+    }
+
+    @Test
+    public void execute_shouldReturnOneUser(){
+       assertEquals( getUsers.execute().size(), 1);
     }
 
 }
